@@ -2,11 +2,11 @@ import Input from '@components/input/Input';
 import Button from '@components/button/Button';
 import '@pages/auth/register/Register.scss';
 import { useState, useEffect } from 'react';
-// import { Utils } from '@services/utils/utils.service';
-// import { authService } from '@services/api/auth/auth.service';
+import { Utils } from '@services/utils/utils.service';
+import { authService } from '@services/api/auth/auth.service';
 import { useNavigate } from 'react-router-dom';
-// import useLocalStorage from '@hooks/useLocalStorage';
-// import useSessionStorage from '@hooks/useSessionStorage';
+import useLocalStorage from '@hooks/useLocalStorage';
+import useSessionStorage from '@hooks/useSessionStorage';
 // import { useDispatch } from 'react-redux';
 
 const Register = () => {
@@ -18,35 +18,38 @@ const Register = () => {
     const [alertType, setAlertType] = useState('');
     const [hasError, setHasError] = useState(false);
     const [user, setUser] = useState();
-    // const [setStoredUsername] = useLocalStorage('username', 'set');
-    // const [setLoggedIn] = useLocalStorage('keepLoggedIn', 'set');
-    // const [pageReload] = useSessionStorage('pageReload', 'set');
+    const [setStoredUsername] = useLocalStorage('username', 'set');
+    const [setLoggedIn] = useLocalStorage('keepLoggedIn', 'set');
+    const [pageReload] = useSessionStorage('pageReload', 'set');
     const navigate = useNavigate();
     // const dispatch = useDispatch();
 
     const registerUser = async (event) => {
-        // setLoading(true);
-        // event.preventDefault();
-        // try {
-        //     const avatarColor = Utils.avatarColor();
-        //     const avatarImage = Utils.generateAvatar(username.charAt(0).toUpperCase(), avatarColor);
-        //     const result = await authService.signUp({
-        //         username,
-        //         email,
-        //         password,
-        //         avatarColor,
-        //         avatarImage
-        //     });
-        //     setLoggedIn(true);
-        //     setStoredUsername(username);
-        //     setAlertType('alert-success');
-        //     Utils.dispatchUser(result, pageReload, dispatch, setUser);
-        // } catch (error) {
-        //     setLoading(false);
-        //     setHasError(true);
-        //     setAlertType('alert-error');
-        //     setErrorMessage(error?.response?.data?.message);
-        // }
+        setLoading(true);
+        event.preventDefault();
+        try {
+            const avatarColor = Utils.avatarColor();
+            const avatarImage = Utils.generateAvatar(username.charAt(0).toUpperCase(), avatarColor);
+            const result = await authService.signUp({
+                username,
+                email,
+                password,
+                avatarColor,
+                avatarImage
+            });
+            setLoggedIn(true);
+            setStoredUsername(username);
+            setAlertType('alert-success');
+            setErrorMessage('')
+            setHasError(false);
+            // Utils.dispatchUser(result, pageReload, dispatch, setUser);
+        } catch (error) {
+            setHasError(true);
+            setAlertType('alert-error');
+            setErrorMessage(error?.response?.data?.message);
+        } finally {
+            setLoading(false);
+        }
     };
 
     useEffect(() => {
@@ -76,7 +79,7 @@ const Register = () => {
                     <Input
                         id="email"
                         name="email"
-                        type="text"
+                        type="email"
                         value={email}
                         labelText="Email"
                         placeholder="Enter Email"
