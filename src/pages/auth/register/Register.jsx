@@ -7,7 +7,7 @@ import { authService } from '@services/api/auth/auth.service';
 import { useNavigate } from 'react-router-dom';
 import useLocalStorage from '@hooks/useLocalStorage';
 import useSessionStorage from '@hooks/useSessionStorage';
-// import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 const Register = () => {
     const [username, setUsername] = useState('');
@@ -22,7 +22,7 @@ const Register = () => {
     const [setLoggedIn] = useLocalStorage('keepLoggedIn', 'set');
     const [pageReload] = useSessionStorage('pageReload', 'set');
     const navigate = useNavigate();
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
     const registerUser = async (event) => {
         setLoading(true);
@@ -42,7 +42,7 @@ const Register = () => {
             setAlertType('alert-success');
             setErrorMessage('')
             setHasError(false);
-            // Utils.dispatchUser(result, pageReload, dispatch, setUser);
+            Utils.dispatchUser(result, pageReload, dispatch, setUser);
         } catch (error) {
             setHasError(true);
             setAlertType('alert-error');

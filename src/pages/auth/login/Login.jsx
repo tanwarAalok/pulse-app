@@ -3,7 +3,7 @@ import { FaArrowRight } from 'react-icons/fa';
 import Input from '@components/input/Input';
 import Button from '@components/button/Button';
 import { Link, useNavigate } from 'react-router-dom';
-// import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import './Login.scss';
 import { authService } from '@services/api/auth/auth.service';
 import useLocalStorage from '@hooks/useLocalStorage';
@@ -23,7 +23,7 @@ const Login = () => {
     const [setLoggedIn] = useLocalStorage('keepLoggedIn', 'set');
     const [pageReload] = useSessionStorage('pageReload', 'set');
     const navigate = useNavigate();
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
     const loginUser = async (event) => {
         setLoading(true);
@@ -37,7 +37,7 @@ const Login = () => {
             setStoredUsername(username);
             setHasError(false);
             setAlertType('alert-success');
-            // Utils.dispatchUser(result, pageReload, dispatch, setUser);
+            Utils.dispatchUser(result, pageReload, dispatch, setUser);
         } catch (error) {
             setHasError(true);
             setAlertType('alert-error');
@@ -99,9 +99,9 @@ const Login = () => {
                 />
 
                 <Link to={'/forgot-password'}>
-          <span className="forgot-password">
-            Forgot password? <FaArrowRight className="arrow-right" />
-          </span>
+                  <span className="forgot-password">
+                    Forgot password? <FaArrowRight className="arrow-right" />
+                  </span>
                 </Link>
             </form>
         </div>

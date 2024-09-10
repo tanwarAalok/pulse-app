@@ -5,7 +5,7 @@ import Button from '@components/button/Button';
 import { Link } from 'react-router-dom';
 import backgroundImage from '@assets/images/background.jpg';
 import '@pages/auth/forgot-password/ForgotPassword.scss';
-// import { authService } from '@services/api/auth/auth.service';
+import { authService } from '@services/api/auth/auth.service';
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState('');
@@ -15,21 +15,21 @@ const ForgotPassword = () => {
     const [responseMessage, setResponseMessage] = useState('');
 
     const forgotPassword = async (event) => {
-        // setLoading(true);
-        // event.preventDefault();
-        // try {
-        //     const response = await authService.forgotPassword(email);
-        //     setLoading(false);
-        //     setEmail('');
-        //     setShowAlert(false);
-        //     setAlertType('alert-success');
-        //     setResponseMessage(response?.data?.message);
-        // } catch (error) {
-        //     setAlertType('alert-error');
-        //     setLoading(false);
-        //     setShowAlert(true);
-        //     setResponseMessage(error?.response?.data?.message);
-        // }
+        setLoading(true);
+        event.preventDefault();
+        try {
+            const response = await authService.forgotPassword(email);
+            setLoading(false);
+            setEmail('');
+            setShowAlert(false);
+            setAlertType('alert-success');
+            setResponseMessage(response?.data?.message);
+        } catch (error) {
+            setAlertType('alert-error');
+            setLoading(false);
+            setShowAlert(true);
+            setResponseMessage(error?.response?.data?.message);
+        }
     };
 
     return (
