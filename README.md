@@ -1,70 +1,60 @@
-# Getting Started with Create React App
+# Pulse App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![React](https://img.shields.io/badge/React-18-20232A?logo=react&logoColor=61DAFB) ![Redux Toolkit](https://img.shields.io/badge/Redux_Toolkit-764ABC?logo=redux&logoColor=white) ![Sass](https://img.shields.io/badge/Sass-CC6699?logo=sass&logoColor=white) ![Socket.IO](https://img.shields.io/badge/Socket.IO-010101?logo=socketdotio&logoColor=white)
 
-## Available Scripts
+The React client for **Pulse**, a social media platform with posts, follows, real-time chat and notifications. The API, queues and sockets live in [pulse-backend](https://github.com/tanwarAalok/pulse-backend).
 
-In the project directory, you can run:
+> **Status:** work in progress. The authentication flows are built; the social feed (`/app/social/streams`) is a placeholder.
 
-### `npm start`
+## What's built
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Auth pages:** sign in and register tabs, forgot password and reset password, wired to the backend's `/api/v1` auth endpoints.
+- **App shell:** React Router v6 routes, a Redux Toolkit store with a user slice, and reusable `Button` and `Input` components.
+- **API layer:** a shared Axios instance (`src/services/axios.js`) that sends cookies with every request, with per-environment base URLs.
+- **Quality:** ESLint and Prettier scripts, React Testing Library and MSW mocks for component tests.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Getting started
 
-### `npm test`
+Requires Node.js 16+ and a running [pulse-backend](https://github.com/tanwarAalok/pulse-backend) (port 8000 by default).
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+git clone https://github.com/tanwarAalok/pulse-app.git
+cd pulse-app
+npm install
+```
 
-### `npm run build`
+Create a `.env` file in the project root:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```env
+REACT_APP_BASE_ENDPOINT=http://localhost:8000
+REACT_APP_ENVIRONMENT=local
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Then start the app on http://localhost:3000:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+npm start
+```
 
-### `npm run eject`
+## Scripts
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+| Command | What it does |
+| --- | --- |
+| `npm start` | Development server with hot reload |
+| `npm test` | Tests with coverage |
+| `npm run build` | Production build in `build/` |
+| `npm run lint:check` / `lint:fix` | ESLint |
+| `npm run prettier:check` / `prettier:fix` | Prettier |
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Project structure
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```
+src/
+  pages/          auth (login, register, forgot/reset password) and social (streams)
+  components/     shared UI components
+  redux-toolkit/  store and reducers
+  services/       Axios instance and API utilities
+  hooks/          custom hooks
+  mocks/          MSW handlers for tests
+  routes.js       route table
+```
